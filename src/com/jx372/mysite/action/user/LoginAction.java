@@ -22,7 +22,7 @@ public class LoginAction implements Action {
 		UserVo vo = new UserDao().get( email, password );
 		if( vo == null ) { // 인증 실패
 			//WebUtils.redirect( 
-			//	"/mysite/user?a=loginform&result=fail", request, response);
+			//	request.getContextPath() + "/user?a=loginform&result=fail", request, response);
 			request.setAttribute( "result", "fail" );
 			WebUtils.forward(
 				"/WEB-INF/views/user/loginform.jsp", 
@@ -36,7 +36,7 @@ public class LoginAction implements Action {
 		session.setAttribute( "authUser", vo );
 		
 		//main redirect
-		WebUtils.redirect( "/mysite/main", request, response);
+		WebUtils.redirect( request.getContextPath() + "/main", request, response);
 	}
 
 }

@@ -23,7 +23,7 @@ public class LogoutAction implements Action {
 			session.invalidate();
 		}
 		
-		WebUtils.redirect( "/mysite/main", request, response);
+		WebUtils.redirect( request.getContextPath() + "/main", request, response);
 	}
 
 }
