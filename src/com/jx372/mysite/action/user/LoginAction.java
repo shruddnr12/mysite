@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.jx372.mysite.dao.UserDao;
 import com.jx372.mysite.vo.UserVo;
@@ -31,7 +32,11 @@ public class LoginAction implements Action {
 		}
 		
 		// 인증 처리
-		System.out.println( "인증처리!!!" );
+		HttpSession session = request.getSession( true );
+		session.setAttribute( "authUser", vo );
+		
+		//main redirect
+		WebUtils.redirect( "/mysite/main", request, response);
 	}
 
 }
