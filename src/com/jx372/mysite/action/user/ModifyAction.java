@@ -12,7 +12,7 @@ import com.jx372.mysite.vo.UserVo;
 import com.jx372.web.action.Action;
 import com.jx372.web.util.WebUtils;
 
-public class ModifyFormAction implements Action {
+public class ModifyAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,10 +30,21 @@ public class ModifyFormAction implements Action {
 		}
 		
 		Long no = authUser.getNo();
-		UserVo userVo = new UserDao().get( no );
+		String name = request.getParameter( "name" );
+		String password = request.getParameter( "password" );
+		String gender = request.getParameter( "gender" );
 		
-		request.setAttribute( "userVo", userVo );
-		WebUtils.forward( "/WEB-INF/views/user/modifyform.jsp", request, response);
+		UserVo vo = new UserVo();
+		vo.setNo(no);
+		vo.setName(name);
+		vo.setPassword(password);
+		vo.setGender(gender);
+		
+		new UserDao().update( vo );
+		
+		//세션 내용 변경
+		authUser.setName( name );
+		
+		WebUtils.redirect( request.getContextPath() + "/user?a=modifyform&result=success", request, response );
 	}
-
 }
