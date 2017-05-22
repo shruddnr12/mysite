@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<% pageContext.setAttribute( "newLine", "\n" ); %>
 <!doctype html>
 <html>
 <head>
@@ -30,17 +31,18 @@
 					</table>
 				</form>
 				<ul>
+					<c:set var="count" value="${fn:length(list) }"/>
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<li>
 							<table>
 								<tr>
-									<td>[${status.index } : ${status.count }]</td>
+									<td>[${count - status.index }]</td>
 									<td>${vo.name }</td>
 									<td>${vo.regDate }</td>
 									<td><a href="${pageContext.servletContext.contextPath }/guestbook?a=deleteform&no=${vo.no }">삭제</a></td>
 								</tr>
 								<tr>
-									<td colspan="4">${vo.message }</td>
+									<td colspan="4">${fn:replace(vo.message, newLine, "<br>") }</td>
 								</tr>
 							</table>
 							<br>
