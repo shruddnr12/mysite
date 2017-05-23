@@ -24,6 +24,7 @@ public class AddAction implements Action {
 		vo.setPasswd(passwd);
 		vo.setMessage(message);
 		
+		System.out.println(name + ":" +message);
 		new GuestbookDao().insert(vo);
 		WebUtils.redirect( request.getContextPath() + "/guestbook", request, response);
 	}
